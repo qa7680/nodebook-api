@@ -46,12 +46,7 @@ app.use((req,res,next) => {
 });
 
 // set up main routes
-// app.use('/', routes);
-app.get('/', (req, res, next) => {
-    res.json({
-        msg: 'Works'
-    })
-})
+app.use('/', routes);
 
 app.listen(PORT, () => {
     console.log(`Listening on ${PORT}`);
