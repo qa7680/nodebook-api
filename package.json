@@ -1,6 +1,9 @@
 {
   "name": "nodebook-api",
   "version": "1.0.0",
+  "engines": {
+    "node": "16.17.1"
+  },
   "description": "",
   "main": "app.js",
   "scripts": {
