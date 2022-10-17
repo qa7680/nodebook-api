@@ -18,7 +18,7 @@ passport.use(
           return done(err);
         }
         if (!user) {
-          return done(null, false, { message: "Incorrect Email" });
+          return done(null, false, { message: "Email does not exist. Please enter a valid email." });
         }
         bcrypt.compare(password, user.password, (err, res) => {
             if (res) {
@@ -26,7 +26,7 @@ passport.use(
               return done(null, user)
             } else {
               // passwords do not match!
-              return done(null, false, { message: "Incorrect Password" })
+              return done(null, false, { message: "Password is incorrect. Please enter the correct password." })
             }
           });
       });

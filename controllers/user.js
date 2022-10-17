@@ -18,10 +18,10 @@ exports.home = (req, res) => {
 // POST request for new user sign up with image
 exports.sign_up = [
     body('email').trim().isEmail().withMessage('Please enter valid email'),
-    body('password').trim().isLength({min: '6'}).escape().withMessage('Password must be at least 6 characters'),
-    body('confirm_password').trim().isLength({min: '6'}).escape().withMessage('Password must be at least 6 characters')
+    body('password').trim().isLength({min: '6'}).escape().withMessage('Password and confirm password must be at least 6 characters and they must match.'),
+    body('confirm_password').trim().isLength({min: '6'}).escape().withMessage('Password and confirm password must be at least 6 characters and they must match.')
         .custom((confirmPassword, {req}) => {
-            if(confirmPassword !== req.body.password) throw new Error('Passwords must be the same');
+            if(confirmPassword !== req.body.password) throw new Error('Passwords must be the same.');
             return true;
         }),    
     (req, res, next) => {
@@ -54,7 +54,7 @@ exports.sign_up = [
                             user.save((err) => {                                
                                 if(err) return next(err);
                                 res.json({
-                                    message: 'user saved',
+                                    success_message: 'You have successfully registered. You can now login using your email and password.',
                                     user: user
                                 });
                             });  
@@ -67,18 +67,17 @@ exports.sign_up = [
 
 // POST request for new user sign up without image
 exports.sign_up_no_image = [
-    body('email').trim().isEmail().withMessage('Please enter valid email'),
-    body('password').trim().isLength({min: '6'}).escape().withMessage('Password must be at least 6 characters'),
-    body('confirm_password').trim().isLength({min: '6'}).escape().withMessage('Password must be at least 6 characters')
+    body('email').trim().isEmail().withMessage('Please enter a valid email.'),
+    body('password').trim().isLength({min: '6'}).escape().withMessage('Password and confirm password must be at least 6 characters and they must match.'),
+    body('confirm_password').trim().isLength({min: '6'}).escape().withMessage('Password and confirm password must be at least 6 characters and they must match.')
         .custom((confirmPassword, {req}) => {
-            if(confirmPassword !== req.body.password) throw new Error('Passwords must be the same');
+            if(confirmPassword !== req.body.password) throw new Error('Passwords must be the same.');
             return true;
         }),    
     (req, res, next) => {
         // check for errors        
         const errors = validationResult(req);
-        if(!errors.isEmpty()) {
-            console.log('Error');
+        if(!errors.isEmpty()) {            
             return res.json(errors);
         }        
         else{
@@ -100,7 +99,7 @@ exports.sign_up_no_image = [
                             user.save((err) => {                                
                                 if(err) return next(err);
                                 res.json({
-                                    message: 'user saved',
+                                    success_message: 'You have successfully registered!. You can now login using your email and password.',
                                     user: user
                                 });
                             });  
